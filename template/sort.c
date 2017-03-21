@@ -57,7 +57,7 @@ void shell_sort(int *n, int s) {
         for (j = g; j < s; j ++) {
             t = *(n + j);
             for (i = j; i >= g && t < *(n + i - g); i -= g)
-                *(n + j) = *(n + j - g);
+                *(n + i) = *(n + i - g);
             *(n + i) = t;
         }
     }
@@ -74,7 +74,7 @@ void heap_sort(int *n, int s) {
         p = i;
         c = 2 * p + 1;
         while (c < s) {
-            if (c < s && *(heap + c + 1) < *(heap + c)) c ++;
+            if (c + 1 < s && *(heap + c + 1) < *(heap + c)) c ++;
             if (*(heap + p) > *(heap + c)) {
                 swap(heap + p, heap + c);
             } else break;
@@ -91,7 +91,7 @@ void heap_sort(int *n, int s) {
         p = 0;
         c = 2 * p + 1;
         while (c < hs) {
-            if (c < s && *(heap + c + 1) < *(heap + c)) c ++;
+            if (c + 1 < hs && *(heap + c + 1) < *(heap + c)) c ++;
             if (*(heap + p) > *(heap + c)) {
                 swap(heap + p, heap + c);
             } else break;
