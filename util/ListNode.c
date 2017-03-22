@@ -36,6 +36,14 @@ void free_ListNode(struct ListNode * l) {
     }
 }
 
+void print_ListNode(struct ListNode * h) {
+    while (h != NULL) {
+        printf("%d ", h->val);
+        h = h->next;
+    }
+    printf("\r\n");
+}
+
 int main() {
     int arr[] = {1, 2, 3, 4};
     struct ListNode * l = convert_int_to_ListNode(arr, 4);
