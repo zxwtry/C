@@ -15,6 +15,15 @@ struct al {
     T* arr;
 };
 
+pal al_init(int capacity) {
+    pal l = (pal) malloc(sizeof(sal));
+    if (capacity < 1) return NULL;
+    l->arr = (T*) malloc(sizeof(T) * capacity);
+    l->capacity = capacity;
+    l->size = 0;
+    return l;
+}
+
 void al_expand_capacity(pal l) {
     T* new_arr = (T*) malloc(sizeof(T) * (l->capacity * 2 + 1));
     int i = 0;
@@ -37,6 +46,17 @@ void al_add_first(pal l, T v) {
     for (i = l->size; i > 0; i --)
         l->arr[i] = l->arr[i - 1];
     l->arr[0] = v;
+    l->size ++;
+}
+
+void al_add_to_index(pal l, T v, int index) {
+    int i = 0;
+    if (index > l->size) return;
+    if (l->capacity == l->size) al_expand_capacity(l);
+    for (i = l->size - 1; i >= index; i --) {
+        l->arr[i+1] = l->arr[i];
+    }
+    l->arr[index] = v;
     l->size ++;
 }
 
@@ -64,7 +84,7 @@ T* al_convert_to_array_free_l(pal l) {
     return arr;
 }
 
-T al_access_by_index(pal l, int index) {
+T al_at(pal l, int index) {
     if (index >= l->size || index < 0) return 0;
     return l->arr[index];
 }
@@ -83,14 +103,13 @@ void al_print(pal l) {
 }
 
 int main() {
-    pal l = (pal) malloc(sizeof(sal));
+    pal l = al_init(2);
     T* arr = NULL;
-    l->arr = (T*) malloc(sizeof(T) * 2);
-    l->capacity = 2;
-    l->size = 0;
     al_add_last(l, 4);
     al_print(l);
     al_add_last(l, 5);
+    al_print(l);
+    al_add_to_index(l, 102, 2);
     al_print(l);
     al_add_last(l, 6);
     al_print(l);
@@ -104,6 +123,6 @@ int main() {
     al_print(l);
     al_remove_last(l);
     al_print(l);
-    printf("%d %d\r\n", al_access_by_index(l, 0), al_access_by_index(l, 100));
+    printf("%d %d\r\n", al_at(l, 0), al_at(l, 100));
     arr = al_convert_to_array_free_l(l);
 }
