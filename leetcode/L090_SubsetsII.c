@@ -99,13 +99,11 @@ void search(pal l, pal ln, int* n, int ni, int nn, int* s, int si, int sn, int s
         return;
     }
     if (ni >= nn || si > sn) return;
-    s[si] = n[ni];
-    if (sign && (ni != 0 && n[ni-1] == n[ni])) {
-        search(l, ln, n, ni+1, nn, s, si+1, sn, 1);
-    } else {
-        search(l, ln, n, ni+1, nn, s, si+1, sn, 1);
+    if (! (sign && ni != 0 && n[ni-1] == n[ni])) {
         search(l, ln, n, ni+1, nn, s, si, sn, 0);
     }
+    if (si < sn) s[si] = n[ni];
+    search(l, ln, n, ni+1, nn, s, si+1, sn, 1);
 }
 
 int** subsetsWithDup(int* n, int nn, int** cn, int* rn) {
@@ -129,7 +127,7 @@ int** subsetsWithDup(int* n, int nn, int** cn, int* rn) {
 
 int main() {
     int n[] = {1,4,3,5,4,4,7,7,8,0};
-    int nn = 10;
+    int nn = 2;
     int rn = 0;
     int* cn = NULL;
     int** a = subsetsWithDup(n, nn, &cn, &rn);
